@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+
+<html>
+    <title>Loot Appraisal</title>
+    <body>
+        <form method="post" action="/">
+            <label for="token_id">Enter your bag id:</label><br>
+            <input type="text" name="token_id" value="">
+            <input type="submit"/>
+        </form>
+        {%  if error %}
+            <p>{{ error }}</p>
+        {% endif %}
+        {% if token_id %}
+        <p>Bag #{{token_id}}</p>
+        <p>Rank {{ token['rank'] }} out of 1316005</p>
+        <p>Top {{token['rank']/1316005*100}}%</p>
+        <p>Total Greatness: {{ token['total'] }} out of 160</p>
+            <table>
+                <tr>
+                    <th>Item</th>
+                    <th>Greatness (0 to 20)</th>
+                </tr>
+            {% for name in token['items'] %}
+                <tr>
+                    <td>{{name}} </td>
+                    <td>{{token['greatness'][loop.index0]}}</td>
+                </tr>
+            {% endfor %}
+            </table>
+        {% endif %}
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <a href="https://twitter.com/joaoabrantis">Creator</a>
+    </body>
+</html>
