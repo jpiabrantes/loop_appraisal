@@ -43,12 +43,11 @@ def pluck(token_id, key_prefix, source_array):
 
 
 def get_stats(token_id):
-    stats = {'greatness': [], 'total': 0, 'items': [], 'colors': [], 'rarity': []}
+    stats = {'greatness': [], 'total': 0, 'items': [], 'colors': []}
     for key_prefix, source in zip(prefixes, source_arrays):
         output, greatness, level = pluck(token_id, key_prefix, source)
         stats['greatness'].append(greatness)
         stats['total'] += greatness
         stats['items'].append(output)
         stats['colors'].append(colors[level])
-        stats['rarity'].append()
     return stats
