@@ -1,6 +1,5 @@
 import pickle
 from flask import Flask, render_template, request
-import gzip
 from bag_looker import get_stats
 
 with open('stats.pkl', 'rb') as f:
@@ -17,9 +16,9 @@ def index():
         try:
             token_id = int(request.form.get('token_id'))
         except:
-            return render_template("index.html", error="Please input a token id between 1 and 1316005")
-        if token_id < 1 or token_id > 1316005:
-            return render_template("index.html", error="Please input a token id between 1 and 1316005")
+            return render_template("index.html", error="Please input a token id between 1 and 1316004")
+        if token_id < 1 or token_id > 1316004:
+            return render_template("index.html", error="Please input a token id between 1 and 1316004")
         token = get_stats(token_id)
         token['rank'] = ranks[token_id]
         print(token)
