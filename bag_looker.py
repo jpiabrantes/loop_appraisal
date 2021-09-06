@@ -27,19 +27,18 @@ def pluck(token_id, key_prefix, source_array):
     level = 0
     if greatness > 14:
         output += ' ' + suffixes[rand % len(suffixes)]
-        level = 15
+        level = 1
     if greatness >= 19:
         name = [None, None]
         name[0] = namePrefixes[rand % len(namePrefixes)]
         name[1] = nameSuffixes[rand % len(nameSuffixes)]
         if greatness == 19:
             output = f'"{name[0]} {name[1]}" {output}'
-            level = 19
+            level = 2
         else:
             output = f'"{name[0]} {name[1]}" {output} +1'
-            level = 20
-    score = 1/level*1/len(source_array)
-    return output, greatness, score
+            level = 3
+    return output, greatness, level
 
 
 def get_stats(token_id):
