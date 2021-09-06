@@ -21,7 +21,6 @@ def index():
             return render_template("index.html", error="Please input a token id between 1 and 1316004")
         token = get_stats(token_id)
         token['rank'] = ranks[token_id]
-        print(token)
         return render_template("index.html", token=token, token_id=token_id)
     elif request.method == 'GET':
         return render_template("./index.html")

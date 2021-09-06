@@ -22,7 +22,7 @@
                     <th>Greatness (0 to 20)</th>
                 </tr>
             {% for name in token['items'] %}
-                <tr>
+                <tr style="color:{{ token['colors'][loop.index0]}}">
                     <td>{{name}} </td>
                     <td>{{token['greatness'][loop.index0]}}</td>
                 </tr>
@@ -36,5 +36,7 @@
         <br>
         <br>
         <br>
+        <a href="https://twitter.com/joaoabrantis">Creator</a>
+        <a href="https://github.com/jpiabrantes/loop_appraisal">Code</a>
     </body>
 </html>
