@@ -19,7 +19,7 @@ def keccak256(inp):
 
 
 def pluck(token_id, key_prefix, source_array):
-    token_id = b'%d'%token_id
+    token_id = b'%d' % token_id
     tmp = encode_abi_packed(['bytes']*2, (key_prefix, token_id))
     rand = random(tmp)
     output = source_array[rand % len(source_array)]
@@ -27,26 +27,28 @@ def pluck(token_id, key_prefix, source_array):
     level = 0
     if greatness > 14:
         output += ' ' + suffixes[rand % len(suffixes)]
-        level = 1
+        level = 15
     if greatness >= 19:
         name = [None, None]
         name[0] = namePrefixes[rand % len(namePrefixes)]
-        name[1] = namePrefixes[rand % len(nameSuffixes)]
+        name[1] = nameSuffixes[rand % len(nameSuffixes)]
         if greatness == 19:
             output = f'"{name[0]} {name[1]}" {output}'
-            level = 2
+            level = 19
         else:
             output = f'"{name[0]} {name[1]}" {output} +1'
-            level = 3
-    return output, greatness, level
+            level = 20
+    score = 1/level*1/len(source_array)
+    return output, greatness, score
 
 
 def get_stats(token_id):
-    stats = {'greatness': [], 'total': 0, 'items': [], 'colors': []}
+    stats = {'greatness': [], 'total': 0, 'items': [], 'colors': [], 'rarity': []}
     for key_prefix, source in zip(prefixes, source_arrays):
         output, greatness, level = pluck(token_id, key_prefix, source)
         stats['greatness'].append(greatness)
         stats['total'] += greatness
         stats['items'].append(output)
         stats['colors'].append(colors[level])
+        stats['rarity'].append()
     return stats
