@@ -13,26 +13,26 @@
         {% endif %}
         {% if token_id %}
         <p>Bag #{{token_id}}</p>
-        <p>Rank {{ token['rank'] }} out of 1316005</p>
-        <p>Top {{token['rank']/1316005*100}}%</p>
+        <p>Greatness Rank {{ token['greatness_rank'] }} out of 1316005 - Top {{"%.1f" % (token['greatness_rank']/1316005*100)}}%</p>
+        <p>Rareness Rank {{ token['rarity_rank'] }} out of 1316005 - Top {{"%.1f" % (token['rarity_rank']/1316005*100)}}%</p>
         <p>Total Greatness: {{ token['total'] }} out of 160</p>
             <table>
                 <tr>
                     <th>Item</th>
                     <th>Greatness (0 to 20)</th>
+                    <th>Probabily (lower is better)</th>
                 </tr>
             {% for name in token['items'] %}
                 <tr style="color:{{ token['colors'][loop.index0]}}">
                     <td>{{name}} </td>
                     <td>{{token['greatness'][loop.index0]}}</td>
+                    <td>{{'%.2e' % token['probabilities'][loop.index0]}}</td>
                 </tr>
             {% endfor %}
             </table>
         {% endif %}
         <br>
         <br>
-        <br>
-        <p>All the bags were ranked according to the sum of greatness of each item.</p>
         <br>
         <br>
         <br>

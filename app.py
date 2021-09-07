@@ -22,7 +22,9 @@ def index():
     elif request.method == 'GET':
         token_id = 174966
     token = get_stats(token_id)
-    token['rank'] = ranks[token_id]
+    gt_rank, ra_rank = ranks[token_id]
+    token['greatness_rank'] = gt_rank
+    token['rarity_rank'] = ra_rank
     return render_template("index.html", token=token, token_id=token_id)
 
 

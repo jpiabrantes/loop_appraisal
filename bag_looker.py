@@ -1,3 +1,4 @@
+from math import log
 from eth_abi.packed import encode_abi_packed
 from Crypto.Hash import keccak
 from lists import *
@@ -25,28 +26,35 @@ def pluck(token_id, key_prefix, source_array):
     output = source_array[rand % len(source_array)]
     greatness = rand % 21
     level = 0
-    if greatness > 14:
+    if greatness < 15:
+        probability = 15 / 21 * 1 / len(source_array)
+    elif greatness > 14:
         output += ' ' + suffixes[rand % len(suffixes)]
+        probability = 4/21 * 1/len(suffixes) * 1/len(source_array)
         level = 1
-    if greatness >= 19:
-        name = [None, None]
-        name[0] = namePrefixes[rand % len(namePrefixes)]
-        name[1] = nameSuffixes[rand % len(nameSuffixes)]
-        if greatness == 19:
-            output = f'"{name[0]} {name[1]}" {output}'
-            level = 2
-        else:
-            output = f'"{name[0]} {name[1]}" {output} +1'
-            level = 3
-    return output, greatness, level
+        if greatness >= 19:
+            name = [None, None]
+            name[0] = namePrefixes[rand % len(namePrefixes)]
+            name[1] = nameSuffixes[rand % len(nameSuffixes)]
+            if greatness == 19:
+                output = f'"{name[0]} {name[1]}" {output}'
+                level = 2
+            else:
+                output = f'"{name[0]} {name[1]}" {output} +1'
+                level = 3
+            probability = 1/21 * 1/len(namePrefixes) * 1/len(nameSuffixes) * 1/len(source_array) * 1/len(suffixes)
+    return output, greatness, probability, level
 
 
 def get_stats(token_id):
-    stats = {'greatness': [], 'total': 0, 'items': [], 'colors': []}
+    stats = {'greatness': [], 'total': 0, 'items': [], 'colors': [],
+             'probabilities': [], 'log_prob': 0}
     for key_prefix, source in zip(prefixes, source_arrays):
-        output, greatness, level = pluck(token_id, key_prefix, source)
+        output, greatness, probability, level = pluck(token_id, key_prefix, source)
         stats['greatness'].append(greatness)
         stats['total'] += greatness
         stats['items'].append(output)
         stats['colors'].append(colors[level])
+        stats['probabilities'].append(probability)
+        stats['log_prob'] += log(probability)
     return stats
